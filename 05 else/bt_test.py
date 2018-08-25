@@ -148,4 +148,8 @@ if __name__ == '__main__':
     # pyfolio showtime
     import pyfolio as pf
 
+# TODO sizers learning, described here:  https://www.backtrader.com/docu/sizers/sizers.html
+    # for most important part of a strategy, position sizing
+    # include van Tharp position sizing examples!
+
     pf.create_full_tear_sheet(returns, positions, transactions, gross_lev, round_trips=True)
