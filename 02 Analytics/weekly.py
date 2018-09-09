@@ -55,7 +55,7 @@ def build_fixed_time_dataset(md, enum):
     maxDate = max(md['startdate'])
 
     # calculate the number of enums inbetween the two dates
-    noYears = pd.period_range(minDate, maxDate, freq='Y')  # für jahre
+    noYears = pd.period_range(minDate, maxDate, freq='A')  # für jahre
     noQuarters = pd.period_range(minDate, maxDate, freq='Q')  # für quartale aber das date wird dann grob
     noMonths = pd.period_range(minDate, maxDate, freq='M')  # für monate
     noWeeks = pd.period_range(minDate, maxDate, freq='W-MON')  # für wochenanfang Montag z.B. 1947
@@ -101,7 +101,7 @@ def build_fixed_distance_dataset(md, enum):
     maxDate = max(md['startdate'])
 
     # calculate the number of enums inbetween the two dates
-    noYears = len(pd.period_range(minDate, maxDate, freq='Y'))  # für jahre
+    noYears = len(pd.period_range(minDate, maxDate, freq='A'))  # für jahre
     noQuarters = len(pd.period_range(minDate, maxDate, freq='Q'))  # für quartale aber das date wird dann grob
     noMonths = len(pd.period_range(minDate, maxDate, freq='M'))  # für monate
     noWeeks = len(pd.period_range(minDate, maxDate, freq='W-MON'))  # für wochenanfang Montag z.B. 1947
@@ -181,10 +181,13 @@ dataset.reset_index()
 #print(with_diffs.to_string()) # just to see more for checking
 
 ##### Workflow to have fixed time definition distances
-test = build_fixed_time_dataset(dataset, 'week')
+test = build_fixed_time_dataset(dataset, 'month')
 test2 = get_dateinfo_columns(test, 'startdate')
 test2 = get_dateinfo_columns(test2, 'enddate')
 test_with_prices = lookup_prices(test2, dataset)
 test_with_pricesdiff = calc_diffs(test_with_prices)
 final = anaylze_seasonality(test_with_pricesdiff, 'startdate_week')
+final_filter = final[final['looser','sum']>5]
+final_filter.sort_index().winrate.plot()
+
 print(final.to_string())
