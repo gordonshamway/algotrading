@@ -14,6 +14,9 @@ find the next trading day for the stock
     For every year make the finding.
 '''
 
+# TODO: The whole script is really not needed anymore i think, maybe i can annotate the distance in the Combinations Table
+# to have this feature
+
 # 1. I don´t need this anymore
 def create_date_table(start='2000-01-01', end='2050-12-31'):
     df = pd.DataFrame({"Date": pd.date_range(start, end)})
